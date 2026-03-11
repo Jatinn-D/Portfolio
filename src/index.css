@@ -1,0 +1,239 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Font Faces ──────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/assets/fonts/CabinetGrotesk-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/assets/fonts/Outfit-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans-Variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+/* ─── Design Tokens (OKLCH raw values) ───────────────────────────────────── */
+@layer base {
+  :root {
+    /* Portfolio colour palette — warm earthy, dull/muted */
+    --bg: #f2ede3;
+    --bg-elevated: #e0d8ca;
+    --accent-primary: #7a8c6e;
+    --accent-secondary: #8b6b4a;
+    --text-primary: #2c2118;
+    --text-muted: #5c5248;
+    --border-color: #ccc3ae;
+    --border-accent: rgba(122, 140, 110, 0.2);
+
+    /* OKLCH semantic tokens (for shadcn compat) — warm earthy palette */
+    --radius: 0.625rem;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: 0.985 0 0;
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.809 0.105 251.813);
+    --chart-2: oklch(0.623 0.214 259.815);
+    --chart-3: oklch(0.546 0.245 262.881);
+    --chart-4: oklch(0.488 0.243 264.376);
+    --chart-5: oklch(0.424 0.199 265.638);
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+  }
+
+  /* Hard-override: zero border radius everywhere */
+  * {
+    border-radius: 0 !important;
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: auto; /* Lenis handles scrolling */
+    background-color: var(--bg);
+    color: var(--text-primary);
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: "Outfit", system-ui, sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+  .dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.809 0.105 251.813);
+    --chart-2: oklch(0.623 0.214 259.815);
+    --chart-3: oklch(0.546 0.245 262.881);
+    --chart-4: oklch(0.488 0.243 264.376);
+    --chart-5: oklch(0.424 0.199 265.638);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+  }
+  .theme {
+    --font-sans: 'Geist Variable', sans-serif;
+  }
+}
+
+/* ─── Page transition ────────────────────────────────────────────────────── */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: page-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Global utility classes ─────────────────────────────────────────────── */
+@layer utilities {
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+    font-family: "Outfit", system-ui, sans-serif;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .sage-glow {
+    box-shadow: 0 0 60px rgba(122, 140, 110, 0.18), 0 0 120px rgba(122, 140, 110, 0.08);
+  }
+
+  .brown-glow {
+    box-shadow: 0 0 40px rgba(139, 107, 74, 0.2);
+  }
+
+  .card-hover {
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-hover:hover {
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 8px 40px rgba(122, 140, 110, 0.18);
+  }
+
+  /* Noise texture overlay for depth */
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* Section left-edge rule for visual rhythm */
+  .section-rule::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 15%;
+    bottom: 15%;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--accent-primary) 30%,
+      var(--accent-secondary) 70%,
+      transparent
+    );
+    opacity: 0.35;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+  }
+}
+
+/* ─── Selection & Focus styles ───────────────────────────────────────────── */
+::selection {
+  background: rgba(122, 140, 110, 0.3);
+  color: var(--text-primary);
+}
+
+:focus-visible {
+  outline: 1px solid var(--accent-primary);
+  outline-offset: 2px;
+}
