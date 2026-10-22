@@ -120,9 +120,12 @@ export function CountUp({
       setValue(to);
       return;
     }
+    // The delay only lines the count up with the page-load animation. If the numbers
+    // come into view later (short screens), start straight away instead of showing zeros.
+    const wait = Math.max(0, delay - performance.now() / 1000);
     const controls = animate(0, to, {
       duration: 1.6,
-      delay,
+      delay: wait,
       ease: EASE,
       onUpdate: (v) => setValue(v),
     });
