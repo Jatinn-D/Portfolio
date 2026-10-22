@@ -275,6 +275,9 @@ a {
 }
 .hero-visual {
   position: relative;
+}
+.hero-drift {
+  position: relative;
   padding-bottom: 72px;
 }
 .tilt-card {
