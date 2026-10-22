@@ -1,6 +1,6 @@
 import { Download, Mail, Phone } from "lucide-react";
 import { FaLinkedinIn } from "react-icons/fa";
-import { SiGithub } from "react-icons/si";
+import { SiGithub, SiInstagram } from "react-icons/si";
 import { PROFILE } from "../../content";
 import { Magnetic, MaskText, Reveal } from "./motion";
 
@@ -54,6 +54,7 @@ export function Contact() {
               LinkedIn
             </a>
             <a href={PROFILE.instagram} target="_blank" rel="noopener noreferrer">
+              <SiInstagram size={13} aria-hidden />
               Instagram
             </a>
           </span>
