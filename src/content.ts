@@ -7,7 +7,7 @@ export const PROFILE = {
   phoneHref: "tel:+918667293993",
   github: "https://github.com/Jatinn-D",
   linkedin: "https://www.linkedin.com/in/jaatinnn/",
-  instagram: "https://www.instagram.com/jatinn_d/",
+  instagram: "https://www.instagram.com/jatinn.nahar",
   resume: "/Resume.pdf",
 };
 
