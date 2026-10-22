@@ -1,8 +1,10 @@
 import { Check, Copy, ExternalLink } from "lucide-react";
+import { motion, type Variants } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { SiGithub } from "react-icons/si";
 import { PROFILE, PROJECTS, type Project } from "../../content";
 import { BrowserFrame } from "./BrowserFrame";
+import { EASE, Magnetic, MaskText, Reveal } from "./motion";
 
 async function copyText(text: string) {
   try {
@@ -68,6 +70,15 @@ function DemoLogin({ demo }: { demo: NonNullable<Project["demo"]> }) {
   );
 }
 
+const textCol: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
+};
+const textItem: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+};
+
 function ProjectRow({ project, index }: { project: Project; index: number }) {
   return (
     <article className="project" id={project.id} aria-labelledby={`${project.id}-name`}>
@@ -79,15 +90,24 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         external
         priority={index === 0}
         label={`Open ${project.name} live site in a new tab`}
+        reveal
+        hoverLabel="Open site"
       />
 
-      <div>
-        <h3 className="project-name" id={`${project.id}-name`}>
+      <motion.div
+        variants={textCol}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+      >
+        <motion.h3 className="project-name" id={`${project.id}-name`} variants={textItem}>
           {project.name}
-        </h3>
-        <p className="project-summary">{project.summary}</p>
+        </motion.h3>
+        <motion.p className="project-summary" variants={textItem}>
+          {project.summary}
+        </motion.p>
 
-        <dl className="project-facts">
+        <motion.dl className="project-facts" variants={textItem}>
           <div>
             <dt>The problem</dt>
             <dd>{project.problem}</dd>
@@ -102,38 +122,52 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
               <dd>{project.result}</dd>
             </div>
           )}
-        </dl>
+        </motion.dl>
 
-        <p className="project-meta">{project.context}</p>
-        {project.stack.length > 0 && (
-          <p className="project-meta">Built with {project.stack.join(", ")}</p>
+        <motion.div variants={textItem}>
+          <p className="project-meta">{project.context}</p>
+          {project.stack.length > 0 && (
+            <ul className="stack" aria-label="Built with">
+              {project.stack.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+          )}
+        </motion.div>
+
+        {project.demo && (
+          <motion.div variants={textItem}>
+            <DemoLogin demo={project.demo} />
+          </motion.div>
         )}
 
-        {project.demo && <DemoLogin demo={project.demo} />}
-
-        <div className="project-actions">
-          <a
-            className="btn btn-solid btn-sm"
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <ExternalLink size={15} aria-hidden />
-            Open live site
-          </a>
-          {project.github && (
+        <motion.div className="project-actions" variants={textItem}>
+          <Magnetic>
             <a
-              className="btn btn-line btn-sm"
-              href={project.github}
+              className="btn btn-solid btn-sm"
+              href={project.url}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <SiGithub size={15} aria-hidden />
-              View code
+              <ExternalLink size={15} aria-hidden className="nudge-up" />
+              Open live site
             </a>
+          </Magnetic>
+          {project.github && (
+            <Magnetic>
+              <a
+                className="btn btn-line btn-sm"
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SiGithub size={15} aria-hidden />
+                View code
+              </a>
+            </Magnetic>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </article>
   );
 }
@@ -144,12 +178,14 @@ export function Work() {
       <div className="wrap">
         <div className="section-head">
           <h2 className="section-title" id="work-title">
-            Live projects
+            <MaskText text="Live projects" />
           </h2>
-          <p className="section-intro">
-            Every project here is live, and each one started with a real problem. Click a
-            screenshot to open the site.
-          </p>
+          <Reveal delay={0.2}>
+            <p className="section-intro">
+              Every project here is live, and each one started with a real problem. Click a
+              screenshot to open the site.
+            </p>
+          </Reveal>
         </div>
 
         <div className="projects">
@@ -158,13 +194,15 @@ export function Work() {
           ))}
         </div>
 
-        <p className="more-code">
-          More of my code, including data-quality and AI experiments, is on{" "}
-          <a href={PROFILE.github} target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          .
-        </p>
+        <Reveal>
+          <p className="more-code">
+            More of my code, including data-quality and AI experiments, is on{" "}
+            <a href={PROFILE.github} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            .
+          </p>
+        </Reveal>
       </div>
     </section>
   );
