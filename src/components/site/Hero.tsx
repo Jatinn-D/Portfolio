@@ -108,7 +108,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0, rotate: 0 }}
           transition={{ duration: 1.2, delay: 0.5, ease: EASE }}
         >
-          <motion.div style={{ y: reduce ? 0 : drift }}>
+          <motion.div className="hero-drift" style={{ y: reduce ? 0 : drift }}>
           <div className="tilt-stage" onPointerMove={onMove} onPointerLeave={onLeave}>
             <motion.div
               className="tilt-card"
